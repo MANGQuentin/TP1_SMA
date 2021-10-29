@@ -11,9 +11,10 @@ public class Environnement {
         String liste = clavier.next();
         Stack<Agent> stackDepart = new Stack<>();
         for (int i = 0; i < liste.length(); i++)
-            stackDepart.push(new Agent(liste.charAt(0), this));
+            stackDepart.push(new Agent(liste.charAt(i), this));
 
         hashMap.put(0, stackDepart);
+        System.out.println(liste);
         System.out.println("Entrer la liste de finale");
         String liste2 = clavier.next();
         listeFinale = new Stack<>();
@@ -59,6 +60,7 @@ public class Environnement {
 
     public void run() {
         for (Agent agent : hashMap.get(0)) {
+            System.out.println(agent.getLettre());
             agent.start();
         }
     }
@@ -77,7 +79,7 @@ public class Environnement {
 
             int indexAgent = colonne.indexOf(a);
             if (indexAgent > -1) {
-                if (indexAgent == colonne.size()) {
+                if (indexAgent == colonne.size() - 1) {
                     Random random = new Random();
                     int indexNouvelleColonne = random.nextInt(3);
 
