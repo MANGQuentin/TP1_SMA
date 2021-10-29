@@ -12,14 +12,13 @@ public class Environnement {
         Stack<Agent> stackDepart = new Stack<>();
         for (int i = 0; i < liste.length(); i++)
             stackDepart.push(new Agent(liste.charAt(i), this));
-
         hashMap.put(0, stackDepart);
-        System.out.println(liste);
+//        System.out.println(liste);
         System.out.println("Entrer la liste de finale");
         String liste2 = clavier.next();
         listeFinale = new Stack<>();
         for (int i = 0; i < liste2.length(); i++)
-            listeFinale.push(new Agent(liste2.charAt(0), this));
+            listeFinale.push(new Agent(liste2.charAt(i), this));
 
         if (stackDepart.size() != listeFinale.size()) {
             System.out.println("Les deux listes ne font pas la même taille.");
@@ -39,8 +38,10 @@ public class Environnement {
         int indexAgentInFinaleList = listeFinale.indexOf(agent);
         char lettreEnDessous;
 
-        if (indexAgentInFinaleList > 0)
+        if (indexAgentInFinaleList > 0) {
             lettreEnDessous = listeFinale.elementAt(indexAgentInFinaleList - 1).getLettre();
+            System.out.println("Agent en dessous de "+agent.getLettre()+" = "+lettreEnDessous);
+        }
         else
             lettreEnDessous = '1';
 
@@ -60,22 +61,24 @@ public class Environnement {
 
     public void run() {
         for (Agent agent : hashMap.get(0)) {
-            System.out.println(agent.getLettre());
+//            System.out.println(agent.getLettre());
             agent.start();
         }
     }
 
     public void seDeplacer(int index, Agent a) {
+        System.out.println("Index "+index);
+        System.out.println("agent " + a.getLettre());
         hashMap.get(index).push(a);
     }
 
     public void pousser(Agent a) {
 
-        System.out.println("On pousse");
+//        System.out.println("On pousse "+a.getLettre());
 
         for (Map.Entry<Integer, Stack<Agent>> entry : hashMap.entrySet()) {
-            Integer key = entry.getKey();
-            Stack<Agent> colonne = entry.getValue();
+            Integer key = entry.getKey();   //N° de colonne
+            Stack<Agent> colonne = entry.getValue();    //Agent
 
             int indexAgent = colonne.indexOf(a);
             if (indexAgent > -1) {
@@ -93,5 +96,21 @@ public class Environnement {
                 }
             }
         }
+    }
+
+
+    public void afficherColonne1(){
+        System.out.println("Colonne 1 = "+hashMap.get(0).get(0).getLettre()+hashMap.get(0).get(1).getLettre()+
+                hashMap.get(0).get(2).getLettre()+hashMap.get(0).get(3).getLettre());
+    }
+
+    public void afficherColonne2(){
+        System.out.println("Colonne 2 = "+hashMap.get(1).get(0).getLettre()+hashMap.get(1).get(1).getLettre()+
+                hashMap.get(1).get(2).getLettre()+hashMap.get(1).get(3).getLettre());
+    }
+
+    public void afficherColonne3(){
+        System.out.println("Colonne 3 = "+hashMap.get(2).get(0).getLettre()+hashMap.get(2).get(1).getLettre()+
+                hashMap.get(2).get(2).getLettre()+hashMap.get(2).get(3).getLettre());
     }
 }
