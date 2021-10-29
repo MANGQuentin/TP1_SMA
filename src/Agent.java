@@ -1,42 +1,55 @@
 public class Agent extends Thread {
 
-    private char lettre;
-    private char enDessous;
-    private Environnement e;
+    private final char lettre;
+    private final Environnement e;
 
-    public Agent(char lettre, char enDessous, Environnement e) {
+    public Agent(char lettre, Environnement e) {
         this.lettre = lettre;
-        this.enDessous = enDessous;
         this.e = e;
     }
 
     @Override   //Multi Threads
     public void run() {
-
+        System.out.println("On demarre l'agent " + this.lettre);
+        do {
+            if (!e.isWellPLaced(this)) {
+                pousser();
+            }
+        } while (!e.getIsFinished());
     }
 
     public char getLettre() {
         return lettre;
     }
 
-    public char getEnDessous() {
-        return enDessous;
+
+    public void seDeplacer(int x) {
+        e.seDeplacer(x, this);
     }
 
-    /*
-    public boolean seDeplacer(int x){
-        if(e.lettreEnDessous(this)!=enDessous){
-            if(e.presenceAuDessus(this)){
-                e.pousser(this);
-            }else{
+    public void pousser() {
+        e.pousser(this);
+    }
 
-            }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
         }
+
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof Agent)) {
+            return false;
+        }
+
+        // typecast o to Complex so that we can compare data members
+        Agent c = (Agent) o;
+
+        // Compare the data members and return accordingly
+        return c.lettre == this.lettre;
     }
 
-    public boolean pousser(){
 
-    }
-
- */
 }
