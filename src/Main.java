@@ -3,6 +3,6 @@ public class Main {
 
         Environnement e = new Environnement();
 
-        e.run();
+        e.run2();
     }
 }

@@ -11,13 +11,13 @@ public class Environnement {
         String liste = clavier.next();
         Stack<Agent> stackDepart = new Stack<>();
         for (int i = 0; i < liste.length(); i++)
-            stackDepart.push(new Agent(liste.charAt(i), this));
+            stackDepart.push(new Agent2(liste.charAt(i), this));
         hashMap.put(0, stackDepart);
         System.out.println("Entrer la liste de finale");
         String liste2 = clavier.next();
         listeFinale = new Stack<>();
         for (int i = 0; i < liste2.length(); i++)
-            listeFinale.push(new Agent(liste2.charAt(i), this));
+            listeFinale.push(new Agent2(liste2.charAt(i), this));
 
         if (stackDepart.size() != listeFinale.size()) {
             System.out.println("Les deux listes ne font pas la même taille.");
@@ -27,6 +27,18 @@ public class Environnement {
     }
 
     public void newEnvironnement() {
+        Collections.shuffle(listeFinale);
+
+        Stack<Agent> newListInitial = (Stack<Agent>) listeFinale.clone();
+
+        Collections.shuffle(newListInitial);
+        hashMap.put(0, newListInitial);
+        hashMap.put(1, new Stack<>());
+        hashMap.put(2, new Stack<>());
+
+    }
+
+    public void newEnvironnement2() {
         Collections.shuffle(listeFinale);
 
         Stack<Agent> newListInitial = (Stack<Agent>) listeFinale.clone();
@@ -72,6 +84,18 @@ public class Environnement {
         return false;
     }
 
+
+    public boolean hasAgentAbove(Agent agent) {
+        for (int i = 0; i < 3; i++) {
+            Stack<Agent> colonne = hashMap.get(i);
+            int indexAgent = colonne.indexOf(agent);
+            if (indexAgent > 0) {
+                return indexAgent != colonne.size() - 1;
+            }
+        }
+        return true;
+    }
+
     public void run() {
         int nbIterations = 0;
         for (int i = 0; i < 1000; i++) {
@@ -93,6 +117,33 @@ public class Environnement {
                 }
             }
             newEnvironnement();
+        }
+        System.out.print("Nombre moyen d'itérations: ");
+        System.out.println(nbIterations / 1000);
+    }
+
+
+    public void run2() {
+        int nbIterations = 0;
+        for (int i = 0; i < 1000; i++) {
+            while (!getIsFinished()) {
+                Random rand = new Random();
+                int random = rand.nextInt(3);
+
+                Stack<Agent> colonne = hashMap.get(random);
+
+                if (colonne.size() > 0) {
+                    int random2 = rand.nextInt(colonne.size());
+
+                    Agent a = colonne.get(random2);
+
+                    a.run();
+
+                    System.out.println(this);
+                    nbIterations++;
+                }
+            }
+            newEnvironnement2();
         }
         System.out.print("Nombre moyen d'itérations: ");
         System.out.println(nbIterations / 1000);

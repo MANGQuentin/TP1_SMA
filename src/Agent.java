@@ -1,7 +1,7 @@
-public class Agent {
+abstract public class Agent {
 
     private final char lettre;
-    private final Environnement e;
+    protected final Environnement e;
 
     public Agent(char lettre, Environnement e) {
         this.lettre = lettre;
