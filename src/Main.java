@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Environnement e = new Environnement();
 
+        Environnement e = new Environnement();
 
         System.out.println("Veuillez choisir quelle partie du TP lancer (1 - 2)");
 
