@@ -1,14 +1,14 @@
 abstract public class Agent {
 
-    private final char lettre;
     protected final Environnement e;
+    private final char lettre;
 
     public Agent(char lettre, Environnement e) {
         this.lettre = lettre;
         this.e = e;
     }
 
-    public void run() {
+    public void action() {
         if (!e.isWellPLaced(this)) {
             pousser();
         }
