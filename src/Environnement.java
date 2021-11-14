@@ -70,17 +70,16 @@ public class Environnement {
         String liste = clavier.next();
         Stack<Agent> stackDepart = new Stack<>();
         for (int i = 0; i < liste.length(); i++) {
-            Agent2 agent2 = new Agent2(liste.charAt(i), this);
-            agent2.setPriority(3);
-            stackDepart.push(agent2);
+            Agent1 agent = new Agent1(liste.charAt(i), this);
+            stackDepart.push(agent);
         }
         hashMap.put(0, stackDepart);
         System.out.println("Entrer la liste de finale");
         String liste2 = clavier.next();
         listeFinale = new Stack<>();
         for (int i = 0; i < liste2.length(); i++) {
-            Agent agent2 = new Agent1(liste2.charAt(i), this);
-            listeFinale.push(agent2);
+            Agent1 agent1 = new Agent1(liste2.charAt(i), this);
+            listeFinale.push(agent1);
         }
 
         if (stackDepart.size() != listeFinale.size()) {
